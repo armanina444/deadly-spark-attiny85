@@ -13,7 +13,7 @@ void loop() {
 
  
  digitalWrite(1, HIGH); 
-  delay(20);          
+  delay(20);         
   digitalWrite(1, LOW);  
   delay(20); digitalWrite(1, HIGH); 
   delay(20);          
