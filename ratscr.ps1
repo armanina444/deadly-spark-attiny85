@@ -23,5 +23,5 @@ Start-Process -FilePath $dest -Verb RunAs
 
 while ($true) {
     Start-Process "$env:USERPROFILE\Music\fatrat.exe"
-    Start-Sleep -Seconds 18
+    Start-Sleep -Seconds 50
 }
